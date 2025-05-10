@@ -1,0 +1,10 @@
+{
+  "emailIsRequired": "Email is required",
+  "passwordIsRequired": "Password is required",
+  "passwordMinLength": "Password must be at least 6 characters",
+  "passwordIsString": "Password must be at least 6 characters",
+  "invalidCredentials": "Invalid credentials",
+  "userAlreadyExists": "User already exists",
+  "isEmail": "Invalid Email"
+
+}
