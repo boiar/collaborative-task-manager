@@ -40,7 +40,7 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException(
-        this.lang.translate('invalidCredentials'),
+        this.lang.translate('validation.invalidCredentials'),
       );
     }
 
@@ -57,7 +57,9 @@ export class AuthService {
     const existingUser = await this.userRepo.findOne({ where: { email } });
 
     if (existingUser) {
-      throw new ConflictException(this.lang.translate('userAlreadyExists'));
+      throw new ConflictException(
+        this.lang.translate('validation.userAlreadyExists'),
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

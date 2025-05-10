@@ -16,7 +16,6 @@ export class ResponseInterceptor<T> implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const lang = ctx.getRequest().i18nLang || 'en';
 
     return next.handle().pipe(
       map((data) => ({

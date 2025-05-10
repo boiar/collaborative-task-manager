@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [UserEntity, BoardEntity, ListEntity, CardEntity], // Correct path for entities
-  migrations: [__dirname + '/migrations/*{.ts,.js}'],
+  entities: [__dirname + '/../**/*.entity.js'],
+  migrations: ['src/migrations/*{.js,.ts}'],
   synchronize: false,
 });

@@ -1,10 +1,10 @@
 {
-  "emailIsRequired": "Email is required",
-  "passwordIsRequired": "Password is required",
-  "passwordMinLength": "Password must be at least 6 characters",
-  "passwordIsString": "Password must be at least 6 characters",
-  "invalidCredentials": "Invalid credentials",
-  "userAlreadyExists": "User already exists",
-  "isEmail": "Invalid Email"
-
+  "emailIsRequired": "البريد الإلكتروني مطلوب",
+  "nameIsRequired": "الاسم مطلوب",
+  "passwordIsRequired": "كلمة المرور مطلوبة",
+  "passwordMinLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+  "passwordIsString": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+  "invalidCredentials": "بيانات الاعتماد غير صحيحة",
+  "userAlreadyExists": "المستخدم موجود بالفعل",
+  "isEmail": "البريد الإلكتروني غير صالح"
 }

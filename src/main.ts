@@ -14,13 +14,6 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
-      // this is important
-      validationError: {
-        target: false,
-        value: false,
-      },
-      // enables i18n keys to be translated
-      stopAtFirstError: false,
     }),
   );
 
