@@ -6,5 +6,12 @@
   "passwordIsString": "Password must be at least 6 characters",
   "invalidCredentials": "Invalid credentials",
   "userAlreadyExists": "User already exists",
-  "isEmail": "Invalid Email"
+  "invalidUser": "Invalid user",
+  "isEmail": "Invalid Email",
+  "board": {
+    "nameRequired": "Board title is required",
+    "nameMustBeString": "Board title must be text",
+    "youNotOwner": "You are not the owner of this board",
+    "invalidBoard": "Invalid board"
+  }
 }

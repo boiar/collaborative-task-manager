@@ -1,19 +1,41 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column, CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn, UpdateDateColumn
+} from "typeorm";
 import { UserEntity } from '../user/user.entity';
 import { ListEntity } from '../list/list.entity';
+import { BoardResponseInterface } from './interfaces/board-response.interface';
 
 @Entity('boards')
 export class BoardEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  board_id: number;
 
-  @Column() name: string;
+  @Column() title: string;
 
-  @Column({ nullable: true }) description: string;
+  @CreateDateColumn({ name: 'created_at' })
+  private createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  private updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.boards)
+  @JoinColumn({ name: 'user_id' })
   owner: UserEntity;
 
   @OneToMany(() => ListEntity, (list) => list.board)
   lists: ListEntity[];
+
+  toResponseObject(): BoardResponseInterface {
+    return {
+      board_id: this.board_id,
+      title: this.title,
+      create_at: this.createdAt,
+      updated_at: this.updatedAt,
+    };
+  }
 }
