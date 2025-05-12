@@ -4,6 +4,7 @@ import { ResponseInterceptor } from './shared/interceptors/response.interceptor'
 import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { MorganMiddleware } from "./shared/middlewares/logger.middleware";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
@@ -26,6 +27,9 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
+
+  // Register the morgan middleware for log
+  app.use(new MorganMiddleware().use.bind(new MorganMiddleware()));
 
   await app.listen(process.env.PORT ?? 3000);
 }

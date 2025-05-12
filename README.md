@@ -9,6 +9,9 @@ A place to see and post ideas in the style of reddit and twitter
 - Users can CRUD Lists
 - Users can CRUD Cards (tasks)
 - Users can CRUD Comments On Cards (tasks)
+- using multer for upload files
+- use winston for log any change on card
+- 
 
 ## Stack
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,11 +7,18 @@ import { UserModule } from './user/user.module';
 import { BoardModule } from './board/board.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from "nestjs-i18n";
+import {
+  AcceptLanguageResolver,
+  HeaderResolver,
+  I18nModule,
+  QueryResolver,
+} from 'nestjs-i18n';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { join } from 'path';
-import { ListModule } from "./list/list.module";
-import { CardModule } from "./card/card.module";
+import { ListModule } from './list/list.module';
+import { CardModule } from './card/card.module';
+import { LoggerModule } from './shared/logger/logger.module';
+import { MorganMiddleware } from './shared/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -24,6 +31,7 @@ import { CardModule } from "./card/card.module";
     ListModule,
     CardModule,
     AuthModule,
+    LoggerModule,
     I18nModule.forRootAsync({
       imports: [],
       resolvers: [
