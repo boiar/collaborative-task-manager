@@ -7,6 +7,7 @@ import { I18nService } from 'nestjs-i18n';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardResponseInterface } from './interfaces/board-response.interface';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { BoardWithListsResponseInterface } from "./interfaces/board-with-lists-response.interface";
 
 @Injectable()
 export class BoardService {
@@ -27,11 +28,18 @@ export class BoardService {
     }
   }
 
-  async getUserBoards(userId: number): Promise<BoardResponseInterface[]> {
+  private async isValidUser(userId: number) {
     const user = await this.userRepo.findOneBy({ user_id: userId });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        await this.i18n.t('validation.invalidUser'),
+        HttpStatus.NOT_FOUND,
+      );
     }
+  }
+
+  async getUserBoards(userId: number): Promise<BoardResponseInterface[]> {
+    await this.isValidUser(userId);
 
     const boards = await this.boardRepo.find({
       where: {
@@ -43,6 +51,18 @@ export class BoardService {
     });
 
     return boards.map((board) => board.toResponseObject());
+  }
+
+  async getListsOfBoard(userId: number, boardId: number): Promise<BoardWithListsResponseInterface> {
+    await this.isValidUser(userId);
+    const boardLists = await this.boardRepo.findOne({
+      where: {
+        board_id: boardId,
+      },
+      relations: ['lists'],
+    });
+
+    return boardLists.boardWithListsToResponseObject();
   }
 
   async createUserBoard(
@@ -70,6 +90,7 @@ export class BoardService {
     userId: number,
     data: UpdateBoardDto,
   ): Promise<BoardResponseInterface> {
+    await this.isValidUser(userId);
     const board = await this.boardRepo.findOne({
       where: { board_id: boardId },
       relations: ['owner'],

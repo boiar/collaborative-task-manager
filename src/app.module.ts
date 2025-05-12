@@ -10,6 +10,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from "nestjs-i18n";
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { join } from 'path';
+import { ListModule } from "./list/list.module";
+import { CardModule } from "./card/card.module";
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { join } from 'path';
     TypeOrmModule.forRoot(AppDataSource.options),
     UserModule,
     BoardModule,
+    ListModule,
+    CardModule,
     AuthModule,
     I18nModule.forRootAsync({
       imports: [],

@@ -13,5 +13,22 @@
     "nameMustBeString": "Board title must be text",
     "youNotOwner": "You are not the owner of this board",
     "invalidBoard": "Invalid board"
+  },
+  "list": {
+    "titleRequired":  "List title is required",
+    "positionIsNumber":  "List position is number",
+    "positionRequired":  "List position is required",
+    "boardIdRequired":  "Board ID is required"
+  },
+  "card": {
+    "titleMustBeString": "Title must be a string",
+    "titleRequired": "Title is required",
+    "dueDateIsDate": "Due date must be a valid date",
+    "dueDateRequired": "Due date is required",
+    "positionIsNumber": "Position must be a number",
+    "positionRequired": "Position is required"
   }
+
 }
+
+

@@ -3,10 +3,9 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
-  BadRequestException,
 } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Response } from 'express';
 
 @Injectable()

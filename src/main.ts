@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
-import { I18nValidationExceptionFilter, I18nValidationPipe } from "nestjs-i18n";
-import { ValidationPipe } from "@nestjs/common";
-
+import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
-
 
   app.useGlobalPipes(
     new I18nValidationPipe({
@@ -22,6 +21,11 @@ async function bootstrap() {
       detailedErrors: false,
     }),
   );
+
+  // Serve static uploads at
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/uploads/',
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }

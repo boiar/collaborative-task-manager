@@ -1,9 +1,6 @@
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
-import { UserEntity } from "../user/user.entity";
-import { BoardEntity } from "../board/board.entity";
-import { ListEntity } from "../list/list.entity";
-import { CardEntity } from "../card/card.entity";
+
 
 export const AppDataSource = new DataSource({
   type: 'mysql',

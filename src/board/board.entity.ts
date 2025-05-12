@@ -9,6 +9,7 @@ import {
 import { UserEntity } from '../user/user.entity';
 import { ListEntity } from '../list/list.entity';
 import { BoardResponseInterface } from './interfaces/board-response.interface';
+import { BoardWithListsResponseInterface } from "./interfaces/board-with-lists-response.interface";
 
 @Entity('boards')
 export class BoardEntity {
@@ -36,6 +37,20 @@ export class BoardEntity {
       title: this.title,
       create_at: this.createdAt,
       updated_at: this.updatedAt,
+    };
+  }
+
+
+  boardWithListsToResponseObject(): BoardWithListsResponseInterface {
+    return {
+      board_id: this.board_id,
+      title: this.title,
+      create_at: this.createdAt,
+      updated_at: this.updatedAt,
+      lists: this.lists.map((list) => ({
+        title: list.title,
+        position: list.position,
+      })),
     };
   }
 }

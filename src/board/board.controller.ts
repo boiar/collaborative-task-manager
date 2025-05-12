@@ -10,7 +10,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../shared/guards/jwt-auth.guard';
-import { Request } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { User } from '../shared/decorators/user.decorator';
 import { UpdateBoardDto } from './dto/update-board.dto';
@@ -34,6 +33,9 @@ export class BoardController {
     return this.boardService.createUserBoard(userId, dto);
   }
 
+
+
+
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async updateUserBoard(
@@ -42,6 +44,15 @@ export class BoardController {
     @Body() dto: UpdateBoardDto,
   ) {
     return this.boardService.updateUserBoard(boardId, userId, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/lists')
+  async getBoardList(
+    @Param('id') boardId: number,
+    @User('userId') userId: number,
+  ) {
+    return this.boardService.getListsOfBoard(userId, boardId);
   }
 
   /*TODO AFTER END LIST, CARD Modules */
