@@ -14,13 +14,13 @@ import { User } from '../shared/decorators/user.decorator';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { UploadFile } from '../shared/decorators/upload-file.decorator';
-import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 @Controller('api/card')
 export class CardController {
   private createCardDto: any;
   constructor(
-    private readonly cardService: CardService,
+    @Inject('ICardService') private readonly cardService: CardService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
   ) {}

@@ -7,10 +7,11 @@ import { I18nService } from 'nestjs-i18n';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardResponseInterface } from './interfaces/board-response.interface';
 import { UpdateBoardDto } from './dto/update-board.dto';
-import { BoardWithListsResponseInterface } from "./interfaces/board-with-lists-response.interface";
+import { BoardWithListsResponseInterface } from './interfaces/board-with-lists-response.interface';
+import { IBoardService } from './interfaces/board-service-interface';
 
 @Injectable()
-export class BoardService {
+export class BoardService implements IBoardService {
   constructor(
     @InjectRepository(BoardEntity)
     private boardRepo: Repository<BoardEntity>,
@@ -53,7 +54,10 @@ export class BoardService {
     return boards.map((board) => board.toResponseObject());
   }
 
-  async getListsOfBoard(userId: number, boardId: number): Promise<BoardWithListsResponseInterface> {
+  async getListsOfBoard(
+    userId: number,
+    boardId: number,
+  ): Promise<BoardWithListsResponseInterface> {
     await this.isValidUser(userId);
     const boardLists = await this.boardRepo.findOne({
       where: {

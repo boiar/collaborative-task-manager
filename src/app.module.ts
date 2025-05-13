@@ -1,4 +1,3 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -18,7 +17,10 @@ import { join } from 'path';
 import { ListModule } from './list/list.module';
 import { CardModule } from './card/card.module';
 import { LoggerModule } from './shared/logger/logger.module';
-import { MorganMiddleware } from './shared/middlewares/logger.middleware';
+import { NotificationModule } from './notification/notification.module';
+import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
+
 
 @Module({
   imports: [
@@ -49,6 +51,8 @@ import { MorganMiddleware } from './shared/middlewares/logger.middleware';
       }),
       inject: [ConfigService],
     }),
+    NotificationModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, ResponseInterceptor],

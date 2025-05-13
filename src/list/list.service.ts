@@ -8,9 +8,10 @@ import { I18nService } from 'nestjs-i18n';
 import { ListResponseInterface } from './interfaces/list-response.interface';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { IListService } from './interfaces/list-service.interface';
 
 @Injectable()
-export class ListService {
+export class ListService implements IListService {
   constructor(
     @InjectRepository(ListEntity)
     private listRepo: Repository<ListEntity>,

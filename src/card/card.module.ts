@@ -12,6 +12,11 @@ import { CardController } from './card.controller';
     TypeOrmModule.forFeature([UserEntity, ListEntity, BoardEntity, CardEntity]),
   ],
   controllers: [CardController],
-  providers: [CardService],
+  providers: [
+    {
+      provide: 'ICardService',
+      useClass: CardService,
+    },
+  ],
 })
 export class CardModule {}

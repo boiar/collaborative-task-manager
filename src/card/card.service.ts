@@ -9,9 +9,10 @@ import { CardEntity } from './card.entity';
 import { CreateCardDto } from './dto/create-card.dto';
 import { CardResponseInterface } from './interfaces/card-response.interface';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { ICardService } from "./interfaces/card-service-interface";
 
 @Injectable()
-export class CardService {
+export class CardService implements ICardService{
   constructor(
     @InjectRepository(CardEntity)
     private cardRepo: Repository<CardEntity>,

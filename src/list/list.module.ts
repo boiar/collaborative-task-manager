@@ -9,6 +9,11 @@ import { ListController } from './list.controller';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, BoardEntity, ListEntity])],
   controllers: [ListController],
-  providers: [ListService],
+  providers: [
+    {
+      provide: 'IListService',
+      useClass: ListService,
+    },
+  ],
 })
 export class ListModule {}

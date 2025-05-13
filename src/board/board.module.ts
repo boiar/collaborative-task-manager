@@ -9,6 +9,11 @@ import { ListEntity } from '../list/list.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, BoardEntity, ListEntity])],
   controllers: [BoardController],
-  providers: [BoardService],
+  providers: [
+    {
+      provide: 'IBoardService',
+      useClass: BoardService,
+    },
+  ],
 })
 export class BoardModule {}

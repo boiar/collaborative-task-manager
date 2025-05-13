@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -16,7 +17,9 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 
 @Controller('api/board')
 export class BoardController {
-  constructor(private boardService: BoardService) {}
+  constructor(
+    @Inject('IBoardService') private readonly boardService: BoardService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -32,9 +35,6 @@ export class BoardController {
   ) {
     return this.boardService.createUserBoard(userId, dto);
   }
-
-
-
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
