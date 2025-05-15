@@ -12,6 +12,7 @@ import {
 import { BoardEntity } from '../board/board.entity';
 import { CardEntity } from '../card/card.entity';
 import { ListResponseInterface } from './interfaces/list-response.interface';
+import { Optional } from "@nestjs/common";
 
 @Entity('lists')
 export class ListEntity {
@@ -20,7 +21,7 @@ export class ListEntity {
 
   @Column() title: string;
 
-  @Column() position: number;
+  @Column() @Optional() position: number;
 
   @CreateDateColumn({ name: 'created_at' })
   private createdAt: Date;

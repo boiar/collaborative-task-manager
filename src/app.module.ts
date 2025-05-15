@@ -20,6 +20,7 @@ import { LoggerModule } from './shared/logger/logger.module';
 import { NotificationModule } from './notification/notification.module';
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 
 @Module({
@@ -53,6 +54,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     NotificationModule,
     ScheduleModule.forRoot(),
+    EventEmitterModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, ResponseInterceptor],

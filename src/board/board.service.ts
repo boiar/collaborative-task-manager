@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardEntity } from './board.entity';
 import { Repository } from 'typeorm';
@@ -9,14 +9,16 @@ import { BoardResponseInterface } from './interfaces/board-response.interface';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardWithListsResponseInterface } from './interfaces/board-with-lists-response.interface';
 import { IBoardService } from './interfaces/board-service-interface';
+import { BOARD_REPOSITORY, IBoardRepositoryInterface } from "./interfaces/board-repository.interface";
+import { IUserRepositoryInterface, USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
 
 @Injectable()
 export class BoardService implements IBoardService {
   constructor(
-    @InjectRepository(BoardEntity)
-    private boardRepo: Repository<BoardEntity>,
-    @InjectRepository(UserEntity)
-    private userRepo: Repository<UserEntity>,
+    @Inject(BOARD_REPOSITORY)
+    private boardRepo: IBoardRepositoryInterface,
+    @Inject(USER_REPOSITORY)
+    private userRepo: IUserRepositoryInterface,
     private readonly i18n: I18nService,
   ) {}
 
@@ -42,7 +44,7 @@ export class BoardService implements IBoardService {
   async getUserBoards(userId: number): Promise<BoardResponseInterface[]> {
     await this.isValidUser(userId);
 
-    const boards = await this.boardRepo.find({
+    const boards = await this.boardRepo.findAll({
       where: {
         owner: {
           user_id: userId,
@@ -108,7 +110,7 @@ export class BoardService implements IBoardService {
     }
 
     await this.ensureOwnership(board, userId);
-    await this.boardRepo.update({ board_id: boardId }, data);
+    await this.boardRepo.update(boardId, data);
 
     const updatedBoard = await this.boardRepo.findOneBy({ board_id: boardId });
 

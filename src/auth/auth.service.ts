@@ -1,8 +1,8 @@
 import {
-  ConflictException,
+  ConflictException, Inject,
   Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+  UnauthorizedException
+} from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../user/user.entity';
 import { Repository } from 'typeorm';
@@ -12,12 +12,13 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { I18nService } from 'nestjs-i18n';
 import { IAuthService } from './interfaces/auth-service.interface';
+import { IUserRepositoryInterface, USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
 
 @Injectable()
 export class AuthService implements IAuthService {
   constructor(
-    @InjectRepository(UserEntity)
-    private userRepo: Repository<UserEntity>,
+    @Inject(USER_REPOSITORY)
+    private userRepo: IUserRepositoryInterface,
     private jwtService: JwtService,
     private readonly lang: I18nService,
   ) {}
@@ -73,9 +74,9 @@ export class AuthService implements IAuthService {
       email,
       password: hashedPassword,
     });
-    await this.userRepo.save(user);
+    await this.userRepo.save(await user);
 
-    const payload = { email: user.email, sub: user.user_id };
+    const payload = { email: (await user).email, sub: (await user).user_id };
     return {
       access_token: this.jwtService.sign(payload),
     };

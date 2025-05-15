@@ -1,28 +1,34 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { ListEntity } from '../list/list.entity';
 import { Repository } from 'typeorm';
 import { BoardEntity } from '../board/board.entity';
 import { UserEntity } from '../user/user.entity';
 import { I18nService } from 'nestjs-i18n';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CardEntity } from './card.entity';
 import { CreateCardDto } from './dto/create-card.dto';
 import { CardResponseInterface } from './interfaces/card-response.interface';
 import { UpdateCardDto } from './dto/update-card.dto';
-import { ICardService } from "./interfaces/card-service-interface";
+import { ICardService } from './interfaces/card-service-interface';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { CardUpdatedEvent } from './events/card-updated.event';
+import { IListRepositoryInterface, LIST_REPOSITORY } from "../list/interfaces/list-repository.interface";
+import { CARD_REPOSITORY, ICardRepositoryInterface } from "./interfaces/card-repository.interface";
+import { BOARD_REPOSITORY, IBoardRepositoryInterface } from "../board/interfaces/board-repository.interface";
+import { IUserRepositoryInterface, USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
 
 @Injectable()
-export class CardService implements ICardService{
+export class CardService implements ICardService {
   constructor(
-    @InjectRepository(CardEntity)
-    private cardRepo: Repository<CardEntity>,
-    @InjectRepository(ListEntity)
-    private listRepo: Repository<ListEntity>,
-    @InjectRepository(BoardEntity)
-    private boardRepo: Repository<BoardEntity>,
-    @InjectRepository(UserEntity)
-    private userRepo: Repository<UserEntity>,
+    @Inject(CARD_REPOSITORY)
+    private cardRepo: ICardRepositoryInterface,
+    @Inject(LIST_REPOSITORY)
+    private listRepo: IListRepositoryInterface,
+    @Inject(BOARD_REPOSITORY)
+    private boardRepo: IBoardRepositoryInterface,
+    @Inject(USER_REPOSITORY)
+    private userRepo: IUserRepositoryInterface,
     private i18n: I18nService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   private async ensureCardList(card: CardEntity, listId: number) {
@@ -64,20 +70,38 @@ export class CardService implements ICardService{
     cardId: number,
     data: UpdateCardDto,
   ): Promise<CardResponseInterface> {
-    const card = await this.cardRepo.findOne({
-      where: { card_id: cardId },
-      relations: ['list'],
-    });
+    try {
+      const card = await this.cardRepo.findOne({
+        where: { card_id: cardId },
+        relations: ['list'],
+      });
 
-    if (!card) {
-      throw new HttpException(
-        await this.i18n.t('validation.card.invalidCard'),
-        HttpStatus.NOT_FOUND,
+      if (!card) {
+        throw new HttpException(
+          await this.i18n.t('validation.card.invalidCard'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.cardRepo.update(cardId, data);
+      const updatedList = await this.cardRepo.findOneBy({ card_id: cardId });
+
+      // Emit success event
+      this.eventEmitter.emit(
+        'card.updated',
+        new CardUpdatedEvent(cardId, Date.now(), userId, true),
       );
-    }
+      console.log('Event emitted: card.updated');
 
-    await this.cardRepo.update({ card_id: cardId }, data);
-    const updatedList = await this.cardRepo.findOneBy({ card_id: cardId });
-    return updatedList.toResponseObject();
+      return updatedList.toResponseObject();
+    } catch (error) {
+      // Emit failure event
+      this.eventEmitter.emit(
+        'card.updated',
+        new CardUpdatedEvent(cardId, Date.now(), userId, false),
+      );
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
