@@ -1,15 +1,17 @@
 import {
-  Column, CreateDateColumn,
+  Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn, UpdateDateColumn
-} from "typeorm";
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { UserEntity } from '../user/user.entity';
 import { ListEntity } from '../list/list.entity';
 import { BoardResponseInterface } from './interfaces/board-response.interface';
-import { BoardWithListsResponseInterface } from "./interfaces/board-with-lists-response.interface";
+import { BoardWithListsResponseInterface } from './interfaces/board-with-lists-response.interface';
 
 @Entity('boards')
 export class BoardEntity {
@@ -39,7 +41,6 @@ export class BoardEntity {
       updated_at: this.updatedAt,
     };
   }
-
 
   boardWithListsToResponseObject(): BoardWithListsResponseInterface {
     return {

@@ -52,6 +52,7 @@ export class ListService implements IListService {
       relations: ['owner'],
     });
 
+    console.log()
     if (!board) {
       throw new HttpException(
         await this.i18n.t('validation.board.invalidBoard'),
