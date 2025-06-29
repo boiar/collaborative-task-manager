@@ -20,8 +20,10 @@ import { LoggerModule } from './shared/logger/logger.module';
 import { NotificationModule } from './notification/notification.module';
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { EventEmitterModule } from "@nestjs/event-emitter";
-
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { APP_GUARD } from '@nestjs/core';
+import { CustomThrottlerGuard } from './shared/guards/throttler.guard';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -55,8 +57,21 @@ import { EventEmitterModule } from "@nestjs/event-emitter";
     NotificationModule,
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, //60 sec
+        limit: 2,
+      },
+    ]),
   ],
   controllers: [AppController],
-  providers: [AppService, ResponseInterceptor],
+  providers: [
+    AppService,
+    ResponseInterceptor,
+    {
+      provide: APP_GUARD,
+      useClass: CustomThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

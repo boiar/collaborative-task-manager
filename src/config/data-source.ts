@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
-
+import { AuthSubscriber } from '../auth/auth.subscriber';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -11,5 +11,6 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   entities: [__dirname + '/../**/*.entity.js'],
   migrations: [__dirname + '/../migrations/*{.js,.ts}'],
-  synchronize: false,
+  subscribers: [AuthSubscriber],
+  synchronize: true,
 });

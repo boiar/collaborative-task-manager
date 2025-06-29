@@ -57,7 +57,7 @@ export class AuthService implements IAuthService {
     };
   }
 
-  async register(registerDto: RegisterDto) {
+  async register(registerDto: RegisterDto): Promise<{ access_token: string }> {
     const { email, password, name } = registerDto;
     const existingUser = await this.userRepo.findOne({ where: { email } });
 
@@ -69,14 +69,14 @@ export class AuthService implements IAuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = this.userRepo.create({
+    const user = await this.userRepo.create({
       name,
       email,
       password: hashedPassword,
     });
-    await this.userRepo.save(await user);
+    const savedUser = await this.userRepo.save(user);
 
-    const payload = { email: (await user).email, sub: (await user).user_id };
+    const payload = { email: savedUser.email, sub: savedUser.user_id };
     return {
       access_token: this.jwtService.sign(payload),
     };

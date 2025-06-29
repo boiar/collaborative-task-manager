@@ -4,9 +4,19 @@ import { ResponseInterceptor } from './shared/interceptors/response.interceptor'
 import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { MorganMiddleware } from "./shared/middlewares/logger.middleware";
+import { MorganMiddleware } from './shared/middlewares/logger.middleware';
+import helmet from 'helmet';
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.use(helmet());
+  app.enableCors();
+
+  //directory for templates
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  // enable view engine
+  app.setViewEngine('ejs');
+
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
 
   app.useGlobalPipes(
