@@ -19,14 +19,7 @@ import { AuthSubscriber } from './auth.subscriber';
     PassportModule,
     UserModule,
   ],
-  providers: [
-    {
-      provide: 'IAuthService',
-      useClass: AuthService,
-    },
-    JwtStrategy,
-    AuthSubscriber,
-  ],
+  providers: [AuthService, JwtStrategy, AuthSubscriber],
   controllers: [AuthController],
 })
 export class AuthModule {}
