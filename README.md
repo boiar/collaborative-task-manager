@@ -48,43 +48,43 @@ This project includes a variety of advanced backend features to ensure scalabili
 - **JWT Authentication**  
   Secure user authentication using JSON Web Tokens.
 
-- ** WebSocket Support**  
+- **WebSocket Support**  
   Real-time communication with clients using WebSockets.
 
-- ** HMVC Architecture**  
+- **HMVC Architecture**  
   Modular, scalable, and maintainable structure using NestJS modules
 
-- ** Subscriber Pattern**  
+- **Subscriber Pattern**  
   Entity Subscribers in TypeORM to trigger logic after data changes.
 
 - **Rate Limiting**  
   Protects the API from abuse and excessive requests.
 
-- ** CORS & CSRF Protection**
+- **CORS & CSRF Protection**
   - CORS enabled for safe API access from different origins
   - CSRF protection for enhanced security in forms and state-changing requests
 
-- ** Testing with Jest**  
+- **Testing with Jest**  
   Comprehensive unit and integration testing with Jest.
 
-- ** Logging with Winston**  
+- **Logging with Winston**  
   Integrated Winston for structured, file-based and console logging.
 
-- ** EventEmitter**  
+- **EventEmitter**  
   Utilized Node.js EventEmitter for internal event-driven architecture (e.g., post-registration tasks).
 
-- ** ScheduleModule**  
+- **ScheduleModule**  
   Automated tasks with @nestjs/schedule for recurring jobs and cron tasks.
 
 - **Multi-language Support (i18n)**  
   Application supports Arabic and English using nestjs-i18n.
 
-- ** File Upload with Multer**  
+- **File Upload with Multer**  
   Handled file uploads securely using Multer middleware.
 
 ---
 
-##  Technologies Used
+## Technologies Used
 
 - **NodeJs**
 - **NestJS**
