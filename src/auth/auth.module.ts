@@ -6,8 +6,8 @@ import { UserEntity } from '../user/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { UserModule } from "../user/user.module";
-import { AuthSubscriber } from "./auth.subscriber";
+import { UserModule } from '../user/user.module';
+import { AuthSubscriber } from './auth.subscriber';
 
 @Module({
   imports: [

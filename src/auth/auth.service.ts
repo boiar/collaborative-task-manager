@@ -1,18 +1,19 @@
 import {
-  ConflictException, Inject,
+  ConflictException,
+  Inject,
   Injectable,
-  UnauthorizedException
-} from "@nestjs/common";
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../user/user.entity';
-import { Repository } from 'typeorm';
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { I18nService } from 'nestjs-i18n';
 import { IAuthService } from './interfaces/auth-service.interface';
-import { IUserRepositoryInterface, USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
+import {
+  IUserRepositoryInterface,
+  USER_REPOSITORY,
+} from '../user/interfaces/user-repository.interface';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -35,8 +36,6 @@ export class AuthService implements IAuthService {
       const { password, ...result } = user; // Omit password from response
       return result;
     }
-
-    return null;
   }
 
   async login(loginDto: LoginDto) {
