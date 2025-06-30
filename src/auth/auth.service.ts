@@ -28,14 +28,16 @@ export class AuthService implements IAuthService {
     const user = await this.userRepo.findOne({ where: { email } });
 
     if (!user) {
-      return null; // User not found
+      return null;
     }
 
     const passwordMatch = await bcrypt.compare(pass, user.password);
-    if (passwordMatch) {
-      const { password, ...result } = user; // Omit password from response
-      return result;
+    if (!passwordMatch) {
+      return null;
     }
+
+    const { password, ...result } = user; // Omit password from response
+    return result;
   }
 
   async login(loginDto: LoginDto) {
