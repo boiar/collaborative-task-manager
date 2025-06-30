@@ -1,11 +1,89 @@
-<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title><%= title %></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Collaborative Task Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-oF+et9Imyc8R6KQoAoUDrZBbTCYg0ZJK3UXTuRlQSRH0lYP4yLSTYSPN25exC6YmgNCPXvZuZdwK8z5R5EbqUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f6f9fc;
+      color: #333;
+    }
+    .container {
+      max-width: 960px;
+      margin: 50px auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .tagline {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #555;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-top: 2rem;
+    }
+    li i {
+      margin-right: 8px;
+      color: #3498db;
+    }
+  </style>
 </head>
 <body>
-<h1>Hello, <%= name %>!</h1>
+<div class="container">
+  <h1>Collaborative Task Manager</h1>
+  <p class="tagline">Built with NestJS + HMVC Architecture</p>
+
+  <p>
+    This platform helps teams create, manage, and discuss tasks collaboratively —
+    inspired by platforms like Reddit and Twitter, but focused on productivity.
+  </p>
+
+  <p class="section-title"><i class="fas fa-star"></i> Key Features:</p>
+  <ul>
+    <li><i class="fas fa-cubes"></i> Modular HMVC design using NestJS</li>
+    <li><i class="fas fa-user-shield"></i> JWT-based Authentication</li>
+    <li><i class="fas fa-tasks"></i> Boards, Lists, Cards, and Comments (CRUD)</li>
+    <li><i class="fas fa-bolt"></i> Real-time updates via WebSocket</li>
+    <li><i class="fas fa-language"></i> Multilingual support (Arabic & English)</li>
+    <li><i class="fas fa-file-alt"></i> Structured logging with Winston</li>
+    <li><i class="fas fa-upload"></i> File uploads via Multer</li>
+    <li><i class="fas fa-clock"></i> Recurring tasks with ScheduleModule</li>
+  </ul>
+
+  <p class="section-title"><i class="fas fa-tools"></i> Tech Stack:</p>
+  <ul>
+    <li><i class="fab fa-node-js"></i> NestJS (Node.js)</li>
+    <li><i class="fas fa-database"></i> MySQL + TypeORM</li>
+    <li><i class="fas fa-satellite-dish"></i> WebSocket, EventEmitter, ScheduleModule</li>
+    <li><i class="fas fa-lock"></i> Multer, JWT, Jest</li>
+  </ul>
+
+  <p>
+    This app is designed to be scalable, maintainable, and production-ready.
+    Follow HMVC best practices to keep your code clean and well-separated.
+  </p>
+</div>
 </body>
 </html>

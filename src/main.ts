@@ -12,10 +12,10 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
 
-  //directory for templates
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
   // enable view engine
   app.setViewEngine('ejs');
+  //directory for templates
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
 
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
 

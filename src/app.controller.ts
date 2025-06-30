@@ -1,4 +1,4 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Render, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Response } from 'express';
 
@@ -12,5 +12,11 @@ export class AppController {
       title: 'Welcome to NestJS',
       name: 'John Doe..',
     });
+  }
+
+  @Get()
+  @Render('index') // views/index.ejs
+  getHome() {
+    return {}; // You can pass data to the view here
   }
 }

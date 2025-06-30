@@ -1,8 +1,22 @@
 # Collaborative Task Manager
 
-![Project Preview](project.png
+![Project Preview](project.png)
 
 A collaborative platform to create, manage, and discuss ideas — inspired by Reddit and Twitter, tailored for team productivity.
+
+
+---
+
+## Architecture Style: HMVC (Hierarchical Model-View-Controller)
+
+This project is built using the **HMVC** (Hierarchical MVC) pattern powered by **NestJS**. Each feature is encapsulated in its own module — such as `auth`, `board`, `card`, `list`, and `user` — following a **self-contained, modular design** that promotes:
+
+- Better code organization
+- Easier testing and maintenance
+- Reusability and scalability
+
+Each module contains its own controller, service, and data layer, aligning with NestJS’s best practices for enterprise-grade applications.
+
 
 ---
 
@@ -13,7 +27,7 @@ A collaborative platform to create, manage, and discuss ideas — inspired by Re
   - Boards
   - Lists
   - Cards (Tasks)
-  - Comments on Cards
+- send deadline notifications
 - Upload files using **Multer**
 - Log card changes using **Winston**
 
@@ -23,6 +37,7 @@ A collaborative platform to create, manage, and discuss ideas — inspired by Re
 
 - **Database:** MySQL
 - **Backend Framework:** NestJS (REST API)
+- **ORM:** TypeORM
 
 ---
 
@@ -35,6 +50,9 @@ This project includes a variety of advanced backend features to ensure scalabili
 
 - **📶 WebSocket Support**  
   Real-time communication with clients using WebSockets.
+
+- **🧩 HMVC Architecture**  
+  Modular, scalable, and maintainable structure using NestJS modules
 
 - **🧩 Subscriber Pattern**  
   Entity Subscribers in TypeORM to trigger logic after data changes.
@@ -58,7 +76,7 @@ This project includes a variety of advanced backend features to ensure scalabili
 - **⏰ ScheduleModule**  
   Automated tasks with @nestjs/schedule for recurring jobs and cron tasks.
 
-- **🌍 Multi-language Support (i18n)**  
+- **Multi-language Support (i18n)**  
   Application supports Arabic and English using nestjs-i18n.
 
 - **📁 File Upload with Multer**  
@@ -79,3 +97,15 @@ This project includes a variety of advanced backend features to ensure scalabili
 - **WebSocket Gateway**
 - **ScheduleModule**
 - **EventEmitter**
+
+
+## Testing
+
+This project uses **Jest** for testing:
+
+```bash
+# Run all tests
+npm run test
+
+# Watch mode
+npm run test:watch
