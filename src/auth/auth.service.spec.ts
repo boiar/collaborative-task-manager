@@ -1,127 +1,115 @@
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { I18nService, TranslateOptions } from 'nestjs-i18n';
-import { IfAnyOrNever } from 'nestjs-i18n/dist/types';
-import * as bcrypt from 'bcrypt';
+import { I18nService } from 'nestjs-i18n';
 import { LoginDto } from './dto/login.dto';
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
+import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import { UserRepositoryStub } from '../user/stubs/user-repository.stub';
+import * as bcrypt from 'bcrypt';
 
-describe('AuthService', () => {
-  let service: AuthService;
-  let mockUserRepo: any;
+describe('AuthService with UserRepositoryStub', () => {
+  let authService: AuthService;
   let jwtService: JwtService;
   let i18nService: I18nService;
+  let userRepo: UserRepositoryStub;
 
-  beforeEach(async () => {
-    mockUserRepo = {
-      findOne: jest.fn(),
-      create: jest.fn(),
-      save: jest.fn(),
-    };
+  beforeEach(() => {
+    userRepo = new UserRepositoryStub();
 
-    jwtService = new JwtService({ secret: 'supersecretkey' });
+    jwtService = new JwtService({ secret: 'test_secret' });
+
     i18nService = {
-      translate: jest.fn((key) => key),
-    } as any;
+      translate: jest.fn((key: string) => key),
+    } as unknown as I18nService;
 
-    service = new AuthService(mockUserRepo, jwtService, i18nService);
+    jest.spyOn(bcrypt, 'compare').mockImplementation(async (plain, hashed) => {
+      if (
+        plain === 'fakehashedpassword' &&
+        hashed === '$2b$10$fakehashedpassword'
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    authService = new AuthService(userRepo, jwtService, i18nService);
   });
 
-  describe('validateUser', () => {
-    it('should return user without password if credentials are valid', async () => {
-      const user = {
-        email: 'test@example.com',
-        password: await bcrypt.hash('pass123', 10),
-      };
-      mockUserRepo.findOne.mockResolvedValue(user);
+  describe('validateUser()', () => {
+    it('should return user without password when credentials are valid', async () => {
+      const result = await authService.validateUser(
+        'existing@example.com',
+        'fakehashedpassword',
+      );
 
-      const result = await service.validateUser(user.email, 'pass123');
-      expect(result).toHaveProperty('email', user.email);
+      expect(result).toMatchObject({ email: 'existing@example.com' });
       expect(result).not.toHaveProperty('password');
     });
 
-    it('should return null if user not found', async () => {
-      mockUserRepo.findOne.mockResolvedValue(null);
-
-      const result = await service.validateUser(
-        'notfound@example.com',
+    it('should return null if user is not found', async () => {
+      const result = await authService.validateUser(
+        'nonexistent@example.com',
         'pass123',
       );
-
       expect(result).toBeNull();
     });
 
     it('should return null if password does not match', async () => {
-      const user = {
-        email: 'test@example.com',
-        password: await bcrypt.hash('wrongPass', 10),
-      };
-      mockUserRepo.findOne.mockResolvedValue(user);
-      const result = await service.validateUser(user.email, 'pass123');
+      const result = await authService.validateUser(
+        'existing@example.com',
+        'wrongpass',
+      );
       expect(result).toBeNull();
     });
   });
 
-  describe('login', () => {
+  describe('login()', () => {
     it('should return access token for valid user', async () => {
       const loginDto: LoginDto = {
-        email: 'user@example.com',
-        password: 'secret',
+        email: 'existing@example.com',
+        password: 'fakehashedpassword',
       };
-      const user = {
-        email: loginDto.email,
-        password: await bcrypt.hash(loginDto.password, 10),
-        user_id: 1,
-      };
-      mockUserRepo.findOne.mockResolvedValue(user);
-      const result = await service.login(loginDto);
+
+      const result = await authService.login(loginDto);
+
       expect(result).toHaveProperty('access_token');
       expect(typeof result.access_token).toBe('string');
     });
 
-    it('should throw UnauthorizedException for invalid credentials', async () => {
-      mockUserRepo.findOne.mockResolvedValue(null);
-
+    it('should throw UnauthorizedException if user is not found', async () => {
       const loginDto: LoginDto = {
-        email: 'user@example.com',
+        email: 'missing@example.com',
         password: 'invalid',
       };
-      await expect(service.login(loginDto)).rejects.toThrow(
+
+      await expect(authService.login(loginDto)).rejects.toThrow(
         UnauthorizedException,
       );
     });
   });
 
-  describe('register', () => {
-    it('should register a new user and return token', async () => {
+  describe('register()', () => {
+    it('should register a new user and return access token', async () => {
       const registerDto: RegisterDto = {
-        name: 'John',
-        email: 'john@example.com',
-        password: 'password123',
+        name: 'New User',
+        email: 'newuser@example.com',
+        password: 'newpassword',
       };
 
-      mockUserRepo.findOne.mockResolvedValue(null);
-      mockUserRepo.create.mockImplementation((dto) => dto);
-      mockUserRepo.save.mockImplementation((user) => ({
-        ...user,
-        user_id: 1,
-      }));
+      const result = await authService.register(registerDto);
 
-      const result = await service.register(registerDto);
       expect(result).toHaveProperty('access_token');
+      expect(typeof result.access_token).toBe('string');
     });
 
-    it("should throw ConflictException if user already exists'", async () => {
-      mockUserRepo.findOne.mockResolvedValue({ email: 'existing@example.com' });
-
+    it('should throw ConflictException if user already exists', async () => {
       const registerDto: RegisterDto = {
-        name: 'Test',
+        name: 'Existing',
         email: 'existing@example.com',
-        password: '123456',
+        password: 'anything',
       };
 
-      await expect(service.register(registerDto)).rejects.toThrow(
+      await expect(authService.register(registerDto)).rejects.toThrow(
         ConflictException,
       );
     });

@@ -1,7 +1,3 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { BoardEntity } from '../board/board.entity';
-import { UserEntity } from '../user/user.entity';
 import { I18nService } from 'nestjs-i18n';
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CardEntity } from './card.entity';
@@ -11,10 +7,22 @@ import { UpdateCardDto } from './dto/update-card.dto';
 import { ICardService } from './interfaces/card-service-interface';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CardUpdatedEvent } from './events/card-updated.event';
-import { IListRepositoryInterface, LIST_REPOSITORY } from "../list/interfaces/list-repository.interface";
-import { CARD_REPOSITORY, ICardRepositoryInterface } from "./interfaces/card-repository.interface";
-import { BOARD_REPOSITORY, IBoardRepositoryInterface } from "../board/interfaces/board-repository.interface";
-import { IUserRepositoryInterface, USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
+import {
+  IListRepositoryInterface,
+  LIST_REPOSITORY,
+} from '../list/interfaces/list-repository.interface';
+import {
+  CARD_REPOSITORY,
+  ICardRepositoryInterface,
+} from './interfaces/card-repository.interface';
+import {
+  BOARD_REPOSITORY,
+  IBoardRepositoryInterface,
+} from '../board/interfaces/board.repository.interface';
+import {
+  IUserRepositoryInterface,
+  USER_REPOSITORY,
+} from '../user/interfaces/user-repository.interface';
 
 @Injectable()
 export class CardService implements ICardService {

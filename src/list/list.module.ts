@@ -7,11 +7,15 @@ import { ListService } from './list.service';
 import { ListController } from './list.controller';
 import { ListRepository } from './repositories/list.repository';
 import { LIST_REPOSITORY } from './interfaces/list-repository.interface';
-import { UserModule } from "../user/user.module";
-import { BoardModule } from "../board/board.module";
+import { UserModule } from '../user/user.module';
+import { BoardModule } from '../board/board.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, BoardEntity, ListEntity]), UserModule, BoardModule],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity, BoardEntity, ListEntity]),
+    UserModule,
+    BoardModule,
+  ],
   controllers: [ListController],
   providers: [
     {

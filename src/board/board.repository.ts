@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
-import { IBoardRepositoryInterface } from '../interfaces/board-repository.interface';
-import { BoardEntity } from '../board.entity';
-import { FindManyOptions } from "typeorm/find-options/FindManyOptions";
+import { IBoardRepositoryInterface } from './interfaces/board.repository.interface';
+import { BoardEntity } from './board.entity';
+import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
 
 @Injectable()
 export class BoardRepository implements IBoardRepositoryInterface {

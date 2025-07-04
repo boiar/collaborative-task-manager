@@ -3,10 +3,7 @@ import { NotificationService } from './notification.service';
 
 @Controller('api/notification')
 export class NotificationController {
-  constructor(
-    @Inject('INotificationService')
-    readonly notificationService: NotificationService,
-  ) {}
+  constructor(private readonly notificationService: NotificationService) {}
 
   @Post('send')
   async sendDeadlineCardNotification(
@@ -16,6 +13,5 @@ export class NotificationController {
       body.userId,
       body.message,
     );
-
   }
 }

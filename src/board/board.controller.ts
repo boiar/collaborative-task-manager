@@ -1,4 +1,3 @@
-import { BoardService } from './board.service';
 import {
   Body,
   Controller,
@@ -14,11 +13,13 @@ import { JwtAuthGuard } from '../shared/guards/jwt-auth.guard';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { User } from '../shared/decorators/user.decorator';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { BOARD_SERVICE } from './constants';
+import { IBoardService } from './interfaces/board.service.interface';
 
 @Controller('api/board')
 export class BoardController {
   constructor(
-    @Inject('IBoardService') private readonly boardService: BoardService,
+    @Inject(BOARD_SERVICE) private readonly boardService: IBoardService,
   ) {}
 
   @UseGuards(JwtAuthGuard)

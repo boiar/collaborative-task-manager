@@ -1,5 +1,5 @@
-import { BoardResponseInterface } from './board-response.interface';
-import { BoardWithListsResponseInterface } from './board-with-lists-response.interface';
+import { BoardResponseInterface } from './response/board-response.interface';
+import { BoardWithListsResponseInterface } from './response/board-with-lists-response.interface';
 import { CreateBoardDto } from '../dto/create-board.dto';
 import { UpdateBoardDto } from '../dto/update-board.dto';
 

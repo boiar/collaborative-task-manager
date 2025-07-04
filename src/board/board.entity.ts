@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
 import { ListEntity } from '../list/list.entity';
-import { BoardResponseInterface } from './interfaces/board-response.interface';
-import { BoardWithListsResponseInterface } from './interfaces/board-with-lists-response.interface';
+import { BoardResponseInterface } from './interfaces/response/board-response.interface';
+import { BoardWithListsResponseInterface } from './interfaces/response/board-with-lists-response.interface';
 
 @Entity('boards')
 export class BoardEntity {
@@ -21,10 +21,10 @@ export class BoardEntity {
   @Column() title: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  private createdAt: Date;
+  readonly createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  private updatedAt: Date;
+  readonly updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.boards)
   @JoinColumn({ name: 'user_id' })
