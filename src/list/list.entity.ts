@@ -12,7 +12,7 @@ import {
 import { BoardEntity } from '../board/board.entity';
 import { CardEntity } from '../card/card.entity';
 import { ListResponseInterface } from './interfaces/list-response.interface';
-import { Optional } from "@nestjs/common";
+import { Optional } from '@nestjs/common';
 
 @Entity('lists')
 export class ListEntity {
@@ -24,10 +24,10 @@ export class ListEntity {
   @Column() @Optional() position: number;
 
   @CreateDateColumn({ name: 'created_at' })
-  private createdAt: Date;
+  readonly createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  private updatedAt: Date;
+  readonly updatedAt: Date;
 
   @ManyToOne(() => BoardEntity, (board) => board.lists)
   @JoinColumn({ name: 'board_id' })

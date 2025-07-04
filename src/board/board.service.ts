@@ -1,16 +1,19 @@
-import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
-import { InjectRepository } from '@nestjs/typeorm';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { BoardEntity } from './board.entity';
-import { Repository } from 'typeorm';
-import { UserEntity } from '../user/user.entity';
 import { I18nService } from 'nestjs-i18n';
 import { CreateBoardDto } from './dto/create-board.dto';
-import { BoardResponseInterface } from './interfaces/board-response.interface';
+import { BoardResponseInterface } from './interfaces/response/board-response.interface';
 import { UpdateBoardDto } from './dto/update-board.dto';
-import { BoardWithListsResponseInterface } from './interfaces/board-with-lists-response.interface';
-import { IBoardService } from './interfaces/board-service-interface';
-import { BOARD_REPOSITORY, IBoardRepositoryInterface } from "./interfaces/board-repository.interface";
-import { IUserRepositoryInterface, USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
+import { BoardWithListsResponseInterface } from './interfaces/response/board-with-lists-response.interface';
+import { IBoardService } from './interfaces/board.service.interface';
+import {
+  BOARD_REPOSITORY,
+  IBoardRepositoryInterface,
+} from './interfaces/board.repository.interface';
+import {
+  IUserRepositoryInterface,
+  USER_REPOSITORY,
+} from '../user/interfaces/user-repository.interface';
 
 @Injectable()
 export class BoardService implements IBoardService {

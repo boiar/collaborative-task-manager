@@ -1,9 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ListEntity } from './list.entity';
-import { Repository } from 'typeorm';
 import { BoardEntity } from '../board/board.entity';
-import { UserEntity } from '../user/user.entity';
 import { I18nService } from 'nestjs-i18n';
 import { ListResponseInterface } from './interfaces/list-response.interface';
 import { CreateListDto } from './dto/create-list.dto';
@@ -16,7 +12,7 @@ import {
 import {
   BOARD_REPOSITORY,
   IBoardRepositoryInterface,
-} from '../board/interfaces/board-repository.interface';
+} from '../board/interfaces/board.repository.interface';
 import {
   IUserRepositoryInterface,
   USER_REPOSITORY,
@@ -52,7 +48,6 @@ export class ListService implements IListService {
       relations: ['owner'],
     });
 
-    console.log()
     if (!board) {
       throw new HttpException(
         await this.i18n.t('validation.board.invalidBoard'),

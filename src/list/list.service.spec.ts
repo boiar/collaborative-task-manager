@@ -1,62 +1,67 @@
-import { Test } from '@nestjs/testing';
-import { ListController } from './list.controller';
+import { Test, TestingModule } from '@nestjs/testing';
 import { ListService } from './list.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { ListEntity } from './list.entity';
-import { BoardEntity } from '../board/board.entity';
-import { UserEntity } from '../user/user.entity';
 import { I18nService } from 'nestjs-i18n';
-import { HttpException } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { CreateListDto } from './dto/create-list.dto';
-import { BOARD_REPOSITORY } from "../board/interfaces/board-repository.interface";
-import { LIST_REPOSITORY } from "./interfaces/list-repository.interface";
-import { MockListRepository } from "./mocks/list.repository.mock";
-import { MockBoardRepository } from "../board/mocks/mock-board.repository";
-import { USER_REPOSITORY } from "../user/interfaces/user-repository.interface";
-import { MockUserRepository } from "../user/mocks/user.repository.mock";
+
+import { LIST_REPOSITORY } from './interfaces/list-repository.interface';
+import { BOARD_REPOSITORY } from '../board/interfaces/board.repository.interface';
+import { USER_REPOSITORY } from '../user/interfaces/user-repository.interface';
+
+import { ListRepositoryStub } from './stubs/list-repository.stub';
+import { BoardRepositoryStub } from '../board/stubs/board-repository.stub';
+import { UserRepositoryStub } from '../user/stubs/user-repository.stub';
 
 describe('ListService', () => {
-  let listService: ListService;
+  let service: ListService;
+
+  const mockI18nService = {
+    t: jest.fn().mockImplementation((key) => Promise.resolve(key)),
+  };
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       providers: [
         ListService,
-        {
-          provide: LIST_REPOSITORY,
-          useClass: MockListRepository, // or useValue/mock instance
-        },
-        {
-          provide: BOARD_REPOSITORY,
-          useClass: MockBoardRepository,
-        },
-        {
-          provide: USER_REPOSITORY,
-          useClass: MockUserRepository,
-        },
-        {
-          provide: I18nService,
-          useValue: {
-            t: jest.fn((key) => key),
-          },
-        },
+        { provide: LIST_REPOSITORY, useClass: ListRepositoryStub },
+        { provide: BOARD_REPOSITORY, useClass: BoardRepositoryStub },
+        { provide: USER_REPOSITORY, useClass: UserRepositoryStub },
+        { provide: I18nService, useValue: mockI18nService },
       ],
     }).compile();
 
-    listService = module.get(ListService);
+    service = module.get<ListService>(ListService);
   });
 
-  it('should create list', async () => {
-    const dto: CreateListDto = {
-      boardId: 1,
-      title: 'My Test List',
-      position: 2,
-    };
+  describe('createList', () => {
+    it('should create a list when user is owner', async () => {
+      const dto = { title: 'New List', position: 1, boardId: 1 };
 
-    const result = await listService.createList(1, dto);
-    expect(result.title).toBe(dto.title);
-    expect(result.position).toBe(dto.position);
-    expect(result).toHaveProperty('create_at');
+      const result = await service.createList(1, dto);
+
+      expect(result).toHaveProperty('list_id');
+      expect(result.title).toBe('New List');
+    });
+
+    it('should throw if board is not found', async () => {
+      await expect(
+        service.createList(1, { title: 'List', boardId: 999, position: 0 }),
+      ).rejects.toThrow('validation.board.invalidBoard');
+    });
+  });
+
+  describe('updateList', () => {
+    it('should update a list when user is owner', async () => {
+      const dto = { title: 'Updated List' };
+
+      const result = await service.updateList(1, 1, dto);
+
+      expect(result).toHaveProperty('list_id');
+      expect(result.title).toBe('Updated List');
+    });
+
+    it('should throw if list not found', async () => {
+      await expect(service.updateList(1, 999, { title: 'X' })).rejects.toThrow(
+        'validation.list.invalidList',
+      );
+    });
   });
 });

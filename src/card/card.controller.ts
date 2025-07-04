@@ -1,14 +1,15 @@
 import { CardService } from './card.service';
 import {
   Body,
-  Controller, Inject, LoggerService,
+  Controller,
+  Inject,
+  LoggerService,
   Param,
   Patch,
   Post,
   UploadedFile,
   UseGuards,
-  UseInterceptors
-} from "@nestjs/common";
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../shared/guards/jwt-auth.guard';
 import { User } from '../shared/decorators/user.decorator';
 import { CreateCardDto } from './dto/create-card.dto';

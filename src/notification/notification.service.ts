@@ -1,4 +1,4 @@
-import { INotificationService } from './interfaces/notification-service-interface';
+import { INotificationService } from './interfaces/notification-service.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotificationEntity } from './notification.entity';
 import { Repository } from 'typeorm';
