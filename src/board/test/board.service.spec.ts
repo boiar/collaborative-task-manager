@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BoardService } from './board.service';
-import { BoardRepositoryStub } from './stubs/board-repository.stub';
-import { UserRepositoryStub } from '../user/stubs/user-repository.stub';
-import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardDto } from './dto/update-board.dto';
+import { BoardService } from '../board.service';
+import { BoardRepositoryStub } from '../stubs/board-repository.stub';
+import { UserRepositoryStub } from '../../user/stubs/user-repository.stub';
+import { CreateBoardDto } from '../dto/create-board.dto';
+import { UpdateBoardDto } from '../dto/update-board.dto';
 import { I18nService } from 'nestjs-i18n';
 
 describe('BoardService (with stubs)', () => {

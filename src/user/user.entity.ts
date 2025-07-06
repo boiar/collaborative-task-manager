@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BoardEntity } from '../board/board.entity';
-import { NotificationEntity } from "../notification/notification.entity";
+import { NotificationEntity } from '../notification/notification.entity';
 
 @Entity('users')
 export class UserEntity {

@@ -16,12 +16,13 @@ import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { UploadFile } from '../shared/decorators/upload-file.decorator';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { ICardService } from './interfaces/card-service-interface';
 
 @Controller('api/card')
 export class CardController {
   private createCardDto: any;
   constructor(
-    @Inject('ICardService') private readonly cardService: CardService,
+    @Inject('ICardService') private readonly cardService: ICardService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
   ) {}
@@ -51,7 +52,7 @@ export class CardController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (file) {
-      data.file_path = file.path; // Set the file path to the DTO
+      data.file_path = file.path;
     }
 
     this.logger.log(`User ${userId} is updating card ${cardId}`, {
