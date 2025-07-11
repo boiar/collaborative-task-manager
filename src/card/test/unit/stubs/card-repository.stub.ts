@@ -1,6 +1,6 @@
-import { ICardRepositoryInterface } from '../interfaces/card-repository.interface';
-import { CardEntity } from '../card.entity';
-import { ListEntity } from '../../list/list.entity';
+import { ICardRepositoryInterface } from '../../../interfaces/card-repository.interface';
+import { CardEntity } from '../../../card.entity';
+import { ListEntity } from '../../../../list/list.entity';
 
 let mockCards: CardEntity[] = [];
 

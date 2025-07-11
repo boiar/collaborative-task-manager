@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from '../auth.controller';
-import { AuthService } from '../auth.service';
-import { IAuthService } from '../interfaces/auth-service.interface';
+import { AuthController } from '../../auth.controller';
+import { AuthService } from '../../auth.service';
+import { IAuthService } from '../../interfaces/auth-service.interface';
 import { TypeOrmModule, getDataSourceToken } from '@nestjs/typeorm';
-import { UserEntity } from '../../user/user.entity';
+import { UserEntity } from '../../../user/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import { join } from 'path';
-import { UserModule } from '../../user/user.module';
-import { AuthModule } from '../auth.module';
-import { BoardEntity } from '../../board/board.entity';
-import { NotificationEntity } from '../../notification/notification.entity';
-import { ListEntity } from '../../list/list.entity';
-import { CardEntity } from '../../card/card.entity';
+import { UserModule } from '../../../user/user.module';
+import { AuthModule } from '../../auth.module';
+import { BoardEntity } from '../../../board/board.entity';
+import { NotificationEntity } from '../../../notification/notification.entity';
+import { ListEntity } from '../../../list/list.entity';
+import { CardEntity } from '../../../card/card.entity';
 import { DataSource } from 'typeorm';
 
 describe('AuthController (e2e)', () => {
@@ -48,7 +48,7 @@ describe('AuthController (e2e)', () => {
         I18nModule.forRoot({
           fallbackLanguage: 'en',
           loaderOptions: {
-            path: join(__dirname, '../../i18n/'),
+            path: join(__dirname, '../../../i18n/'),
             watch: false,
           },
           resolvers: [{ use: HeaderResolver, options: ['lang'] }],

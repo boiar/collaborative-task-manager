@@ -1,7 +1,7 @@
-import { NotificationService } from '../notification.service';
-import { NotificationGateway } from '../notification.gateway';
+import { NotificationService } from '../../notification.service';
+import { NotificationGateway } from '../../notification.gateway';
 import { Repository } from 'typeorm';
-import { NotificationEntity } from '../notification.entity';
+import { NotificationEntity } from '../../notification.entity';
 
 describe('NotificationService', () => {
   let service: NotificationService;

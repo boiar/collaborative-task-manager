@@ -1,25 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BoardController } from '../board.controller';
-import { BoardService } from '../board.service';
-import { BoardEntity } from '../board.entity';
-import { UserEntity } from '../../user/user.entity';
-import { NotificationEntity } from '../../notification/notification.entity';
-import { ListEntity } from '../../list/list.entity';
-import { CardEntity } from '../../card/card.entity';
+import { BoardController } from '../../board.controller';
+import { BoardService } from '../../board.service';
+import { BoardEntity } from '../../board.entity';
+import { UserEntity } from '../../../user/user.entity';
+import { NotificationEntity } from '../../../notification/notification.entity';
+import { ListEntity } from '../../../list/list.entity';
+import { CardEntity } from '../../../card/card.entity';
 import { I18nModule, HeaderResolver } from 'nestjs-i18n';
 import { join } from 'path';
-import { AuthModule } from '../../auth/auth.module';
-import { UserModule } from '../../user/user.module';
+import { AuthModule } from '../../../auth/auth.module';
+import { UserModule } from '../../../user/user.module';
 import { DataSource } from 'typeorm';
-import { BoardRepository } from '../board.repository';
-import { UserRepository } from '../../user/repositories/user.repository';
+import { BoardRepository } from '../../board.repository';
+import { UserRepository } from '../../../user/repositories/user.repository';
 import {
   BOARD_REPOSITORY,
-} from '../interfaces/board.repository.interface';
+} from '../../interfaces/board.repository.interface';
 import {
   USER_REPOSITORY,
-} from '../../user/interfaces/user-repository.interface';
+} from '../../../user/interfaces/user-repository.interface';
 
 describe('BoardController (e2e)', () => {
   let module: TestingModule;

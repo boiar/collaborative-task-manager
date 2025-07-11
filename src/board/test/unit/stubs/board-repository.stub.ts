@@ -1,8 +1,8 @@
-import { IBoardRepositoryInterface } from '../interfaces/board.repository.interface';
-import { BoardEntity } from '../board.entity';
+import { IBoardRepositoryInterface } from '../../../interfaces/board.repository.interface';
+import { BoardEntity } from '../../../board.entity';
 import { FindOptionsWhere } from 'typeorm';
-import { UserEntity } from '../../user/user.entity';
-import { ListEntity } from '../../list/list.entity';
+import { UserEntity } from '../../../../user/user.entity';
+import { ListEntity } from '../../../../list/list.entity';
 
 const mockUser: UserEntity = {
   user_id: 1,

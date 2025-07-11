@@ -1,10 +1,10 @@
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
-import { LoginDto } from '../dto/login.dto';
-import { RegisterDto } from '../dto/register.dto';
+import { LoginDto } from '../../dto/login.dto';
+import { RegisterDto } from '../../dto/register.dto';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
-import { UserRepositoryStub } from '../../user/stubs/user-repository.stub';
+import { UserRepositoryStub } from '../../../user/test/unit/stubs/user-repository.stub';
 import * as bcrypt from 'bcrypt';
 
 describe('AuthService with UserRepositoryStub', () => {

@@ -1,5 +1,5 @@
-import { IUserRepositoryInterface } from '../interfaces/user-repository.interface';
-import { UserEntity } from '../user.entity';
+import { IUserRepositoryInterface } from '../../../interfaces/user-repository.interface';
+import { UserEntity } from '../../../user.entity';
 import { FindOneOptions, FindOptionsWhere } from 'typeorm';
 
 let mockUsers: UserEntity[] = [

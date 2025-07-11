@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CardController } from '../card.controller';
+import { CardController } from '../../card.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CardEntity } from '../card.entity';
-import { ListEntity } from '../../list/list.entity';
-import { UserEntity } from '../../user/user.entity';
+import { CardEntity } from '../../card.entity';
+import { ListEntity } from '../../../list/list.entity';
+import { UserEntity } from '../../../user/user.entity';
 import { DataSource } from 'typeorm';
 import { join } from 'path';
 import { I18nModule, HeaderResolver } from 'nestjs-i18n';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { BoardEntity } from '../../board/board.entity';
-import { NotificationEntity } from '../../notification/notification.entity';
-import { CardModule } from '../card.module';
+import { BoardEntity } from '../../../board/board.entity';
+import { NotificationEntity } from '../../../notification/notification.entity';
+import { CardModule } from '../../card.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ConfigModule } from '@nestjs/config';
 
@@ -54,7 +54,7 @@ describe('CardController (e2e)', () => {
         I18nModule.forRoot({
           fallbackLanguage: 'en',
           loaderOptions: {
-            path: join(__dirname, '../../i18n/'),
+            path: join(__dirname, '../../../i18n/'),
             watch: false,
           },
           resolvers: [{ use: HeaderResolver, options: ['lang'] }],

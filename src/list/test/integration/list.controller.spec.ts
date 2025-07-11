@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ListController } from '../list.controller';
-import { ListEntity } from '../list.entity';
-import { BoardEntity } from '../../board/board.entity';
-import { UserEntity } from '../../user/user.entity';
+import { ListController } from '../../list.controller';
+import { ListEntity } from '../../list.entity';
+import { BoardEntity } from '../../../board/board.entity';
+import { UserEntity } from '../../../user/user.entity';
 import { DataSource } from 'typeorm';
-import { BoardModule } from '../../board/board.module';
-import { UserModule } from '../../user/user.module';
-import { AuthModule } from '../../auth/auth.module';
-import { ListModule } from '../list.module';
+import { BoardModule } from '../../../board/board.module';
+import { UserModule } from '../../../user/user.module';
+import { AuthModule } from '../../../auth/auth.module';
+import { ListModule } from '../../list.module';
 import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import { join } from 'path';
-import { NotificationEntity } from '../../notification/notification.entity';
-import { CardEntity } from "../../card/card.entity";
+import { NotificationEntity } from '../../../notification/notification.entity';
+import { CardEntity } from "../../../card/card.entity";
 
 describe('ListController (e2e)', () => {
   let module: TestingModule;
@@ -52,7 +52,7 @@ describe('ListController (e2e)', () => {
         I18nModule.forRoot({
           fallbackLanguage: 'en',
           loaderOptions: {
-            path: join(__dirname, '../../i18n/'), // adjust as needed
+            path: join(__dirname, '../../../i18n/'),
             watch: false,
           },
           resolvers: [{ use: HeaderResolver, options: ['lang'] }],

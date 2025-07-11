@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NotificationController } from '../notification.controller';
-import { NotificationService } from '../notification.service';
-import { NotificationModule } from '../notification.module';
+import { NotificationController } from '../../notification.controller';
+import { NotificationService } from '../../notification.service';
+import { NotificationModule } from '../../notification.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NotificationEntity } from '../notification.entity'; // if needed
+import { NotificationEntity } from '../../notification.entity'; // if needed
 import { ConfigModule } from '@nestjs/config';
-import { UserEntity } from '../../user/user.entity';
-import { BoardEntity } from '../../board/board.entity';
-import { ListEntity } from '../../list/list.entity';
-import { CardEntity } from '../../card/card.entity';
+import { UserEntity } from '../../../user/user.entity';
+import { BoardEntity } from '../../../board/board.entity';
+import { ListEntity } from '../../../list/list.entity';
+import { CardEntity } from '../../../card/card.entity';
 import { DataSource } from 'typeorm';
 
 describe('NotificationController (integration)', () => {

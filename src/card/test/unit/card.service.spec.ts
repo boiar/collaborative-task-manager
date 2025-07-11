@@ -1,9 +1,9 @@
-import { CardService } from '../card.service';
-import { CardRepositoryStub } from '../stubs/card-repository.stub';
-import { ListRepositoryStub } from '../../list/stubs/list-repository.stub';
+import { CardService } from '../../card.service';
+import { CardRepositoryStub } from './stubs/card-repository.stub';
+import { ListRepositoryStub } from '../../../list/test/unit/stubs/list-repository.stub';
 import { I18nService } from 'nestjs-i18n';
-import { CreateCardDto } from '../dto/create-card.dto';
-import { UpdateCardDto } from '../dto/update-card.dto';
+import { CreateCardDto } from '../../dto/create-card.dto';
+import { UpdateCardDto } from '../../dto/update-card.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('CardService (with stub)', () => {
