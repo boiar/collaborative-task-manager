@@ -1,6 +1,6 @@
-import { IListRepositoryInterface } from '../interfaces/list-repository.interface';
-import { ListEntity } from '../list.entity';
-import { BoardEntity } from '../../board/board.entity';
+import { IListRepositoryInterface } from '../../../interfaces/list-repository.interface';
+import { ListEntity } from '../../../list.entity';
+import { BoardEntity } from '../../../../board/board.entity';
 
 let mockLists: ListEntity[] = [];
 

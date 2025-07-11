@@ -101,7 +101,14 @@ This project includes a variety of advanced backend features to ensure scalabili
 
 ## Testing
 
-This project uses **Jest** for testing:
+This project uses **[Jest](https://jestjs.io/)** for both **unit** and **end-to-end (e2e)** testing to ensure reliability and code quality.
+
+### Test Types
+
+- **Unit Tests**: Isolated tests for services, repositories, and business logic.
+- **E2E (End-to-End) Tests**: Simulate real HTTP requests to test the full flow of features (e.g., user registration, login, board/card creation).
+
+### Running Tests
 
 ```bash
 # Run all tests
@@ -109,3 +116,6 @@ npm run test
 
 # Watch mode
 npm run test:watch
+
+# Run only e2e tests
+npm run test:e2e

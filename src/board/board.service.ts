@@ -90,8 +90,9 @@ export class BoardService implements IBoardService {
       ...data,
       owner: user,
     });
-    const savedBoard = await this.boardRepo.save(board);
-    return savedBoard.toResponseObject();
+    await this.boardRepo.save(board);
+    const fullBoard = await this.boardRepo.findOneBy({ board_id: board.board_id });
+    return fullBoard.toResponseObject();
   }
 
   async updateUserBoard(

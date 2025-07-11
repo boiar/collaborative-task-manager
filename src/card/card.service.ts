@@ -68,9 +68,11 @@ export class CardService implements ICardService {
       list: list,
     });
 
-    const savedCard = await this.cardRepo.save(card);
-
-    return savedCard.toResponseObject();
+    const saved = await this.cardRepo.save(card);
+    const cardEntity = await this.cardRepo.findOne({
+      where: { card_id: saved.card_id },
+    });
+    return cardEntity?.toResponseObject();
   }
 
   async updateCard(

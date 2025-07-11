@@ -47,7 +47,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
       useFactory: (configService: ConfigService) => ({
         fallbackLanguage: configService.get('FALLBACK_LANGUAGE') || 'en',
         loaderOptions: {
-          path: join(__dirname, '/i18n/'), // make sure __dirname resolves correctly
+          path: join(__dirname, '/i18n/'),
           watch: true,
           json: true,
         },

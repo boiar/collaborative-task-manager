@@ -62,8 +62,8 @@ export class ListService implements IListService {
     });
 
     const savedList = await this.listRepo.save(list);
-
-    return savedList.toResponseObject();
+    const fullList = await this.listRepo.findOneBy({ list_id: savedList.list_id });
+    return fullList.toResponseObject();
   }
 
   async updateList(

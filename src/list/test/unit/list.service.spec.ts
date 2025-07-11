@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ListService } from './list.service';
+import { ListService } from '../../list.service';
 import { I18nService } from 'nestjs-i18n';
 
-import { LIST_REPOSITORY } from './interfaces/list-repository.interface';
-import { BOARD_REPOSITORY } from '../board/interfaces/board.repository.interface';
-import { USER_REPOSITORY } from '../user/interfaces/user-repository.interface';
+import { LIST_REPOSITORY } from '../../interfaces/list-repository.interface';
+import { BOARD_REPOSITORY } from '../../../board/interfaces/board.repository.interface';
+import { USER_REPOSITORY } from '../../../user/interfaces/user-repository.interface';
 
 import { ListRepositoryStub } from './stubs/list-repository.stub';
-import { BoardRepositoryStub } from '../board/stubs/board-repository.stub';
-import { UserRepositoryStub } from '../user/stubs/user-repository.stub';
+import { BoardRepositoryStub } from '../../../board/test/unit/stubs/board-repository.stub';
+import { UserRepositoryStub } from '../../../user/test/unit/stubs/user-repository.stub';
 
 describe('ListService', () => {
   let service: ListService;

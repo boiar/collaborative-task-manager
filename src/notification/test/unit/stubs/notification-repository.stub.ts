@@ -1,5 +1,5 @@
-import { NotificationEntity } from '../notification.entity';
-import { UserEntity } from '../../user/user.entity';
+import { NotificationEntity } from '../../../notification.entity';
+import { UserEntity } from '../../../../user/user.entity';
 
 const mockUser: UserEntity = {
   user_id: 1,

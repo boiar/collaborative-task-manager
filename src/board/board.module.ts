@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from "@nestjs/common";
 import { BoardController } from './board.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../user/user.entity';
@@ -7,12 +7,14 @@ import { ListEntity } from '../list/list.entity';
 import { UserModule } from '../user/user.module';
 import { BOARD_REPOSITORY } from './interfaces/board.repository.interface';
 import { BoardRepository } from './board.repository';
-import { USER_REPOSITORY } from '../user/interfaces/user-repository.interface';
+import { BoardService } from './board.service';
+import { ListModule } from '../list/list.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, BoardEntity, ListEntity]),
-    UserModule,
+    forwardRef(() => UserModule),
+    forwardRef(() => ListModule),
   ],
   controllers: [BoardController],
   providers: [
@@ -20,7 +22,11 @@ import { USER_REPOSITORY } from '../user/interfaces/user-repository.interface';
       provide: BOARD_REPOSITORY,
       useClass: BoardRepository,
     },
+    {
+      provide: 'IBoardService',
+      useClass: BoardService,
+    },
   ],
-  exports: [USER_REPOSITORY],
+  exports: [BOARD_REPOSITORY],
 })
 export class BoardModule {}
